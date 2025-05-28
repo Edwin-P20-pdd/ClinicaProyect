@@ -11,6 +11,7 @@ public class PacientePrincipal {
         Paciente paciente = new Paciente();
 
         paciente.setIdPaciente(0001);
+        paciente.setCedula("1728461972");
         paciente.setNombre("Juan");
         paciente.setApellido("Cruz");
         paciente.setFechaNacimiento(new Date());
