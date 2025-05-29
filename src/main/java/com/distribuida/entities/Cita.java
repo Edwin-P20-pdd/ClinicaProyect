@@ -13,7 +13,7 @@ public class Cita {
 
     public Cita() {
     }
-    //
+
     public Cita(int idCita, Date fecha, String motivo, Paciente paciente, Doctor doctor) {
         this.idCita = idCita;
         this.fecha = fecha;

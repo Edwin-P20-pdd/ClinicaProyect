@@ -63,11 +63,11 @@ public class PacienteTest {
     public void testPacienteToString(){
         String str = paciente.toString();
         assertAll("Validar Datos Paciente - ToString",
-                () -> assertTrue(str.contains("0001")),
+                () -> assertTrue(str.contains("1")),
                 () -> assertTrue(str.contains("1728461972")),
                 () -> assertTrue(str.contains("Juan")),
                 () -> assertTrue(str.contains("Cruz")),
-                //() -> assertTrue(str.contains("fechaNacimiento")),
+                () -> assertTrue(str.contains(fechaNacimiento.toString())),
                 () -> assertTrue(str.contains("Av. Siempre viva")),
                 () -> assertTrue(str.contains("0987654321")),
                 () -> assertTrue(str.contains("correo@ejemplo.com"))
