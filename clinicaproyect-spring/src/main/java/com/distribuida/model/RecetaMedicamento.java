@@ -1,8 +1,15 @@
 package com.distribuida.model;
 
-public class RecetaMedicamento {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "receta_medicamento")
+public class RecetaMedicamento {
+    @ManyToOne
+    @JoinColumn(name = "id_receta")
     private Receta receta;
+    @ManyToOne
+    @JoinColumn(name = "id_medicamento")
     private Medicamento medicamento;
 
     public RecetaMedicamento() {
