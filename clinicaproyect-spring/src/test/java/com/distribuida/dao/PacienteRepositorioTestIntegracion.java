@@ -8,12 +8,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-/*
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
@@ -42,11 +42,11 @@ public class PacienteRepositorioTestIntegracion {
 
     @Test
     public void save() {
-        Paciente paciente = new Paciente(0,"1723456789", "Luis", "Martínez", "1990-06-15", "Calle Ficticia 123", "0987654321", "luis.martinez@gmail.com");
+        Paciente paciente = new Paciente(0,"1723456789", "Luis", "Martínez", new Date(), "Calle Ficticia 123", "0987654321", "luis.martinez@gmail.com");
         paciente.setCedula("1723456789");
         paciente.setNombre("Luis");
         paciente.setApellido("Martínez");
-        paciente.setFechaNacimiento(Date.valueOf("1990-06-15"));
+        paciente.setFechaNacimiento(new Date());
         paciente.setDireccion("Calle Ficticia 123");
         paciente.setTelefono("0987654321");
         paciente.setCorreo("luis.martinez@gmail.com");
@@ -67,7 +67,7 @@ public class PacienteRepositorioTestIntegracion {
         paciente.orElse(null).setCedula("0987654321");
         paciente.orElse(null).setNombre("Luis Actualizado");
         paciente.orElse(null).setApellido("Martínez Modificado");
-        paciente.orElse(null).setFechaNacimiento(Date.valueOf("1989-01-01"));
+        paciente.orElse(null).setFechaNacimiento(new Date());
         paciente.orElse(null).setDireccion("Av. Siempre Viva 742");
         paciente.orElse(null).setTelefono("0999999999");
         paciente.orElse(null).setCorreo("actualizado@mail.com");
@@ -85,5 +85,5 @@ public class PacienteRepositorioTestIntegracion {
         }
         assertFalse(pacienteRepository.existsById(100), "El id = 100 debería haberse eliminado.");
     }
+
 }
-*/
