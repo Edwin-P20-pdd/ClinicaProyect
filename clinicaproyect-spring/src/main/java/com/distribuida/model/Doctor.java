@@ -3,7 +3,7 @@ package com.distribuida.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Doctor")
+@Table(name = "doctor")
 
 public class Doctor {
     @Id

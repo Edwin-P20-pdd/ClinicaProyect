@@ -1,14 +1,26 @@
 package com.distribuida.model;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
+@Entity
+@Table(name = "cita")
 public class Cita {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cita")
     private int idCita;
+    @Column(name = "fecha")
     private Date fecha;
+    @Column(name = "motivo")
     private String motivo;
     //
+    @ManyToOne
+    @JoinColumn(name = "id_paciente")
     private Paciente paciente;
+    @ManyToOne
+    @JoinColumn(name = "id_doctor")
     private Doctor doctor;
 
     public Cita() {
