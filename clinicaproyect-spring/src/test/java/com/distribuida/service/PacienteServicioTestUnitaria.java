@@ -31,13 +31,13 @@ public class PacienteServicioTestUnitaria {
     public void setUp() {
         paciente = new Paciente();
         paciente.setIdPaciente(1);
-        paciente.setCedula("1102765432");
-        paciente.setNombre("Carlos");
-        paciente.setApellido("Martínez");
+        paciente.setCedula("1754399507");
+        paciente.setNombre("Angel");
+        paciente.setApellido("Flores");
         paciente.setFechaNacimiento(new Date());
-        paciente.setDireccion("Calle 123");
-        paciente.setTelefono("0991234567");
-        paciente.setCorreo("carlos@ejemplo.com");
+        paciente.setDireccion("Av. pacifico");
+        paciente.setTelefono("098370160");
+        paciente.setCorreo("Angel@ejemplo.com");
     }
 
     @Test
@@ -54,7 +54,7 @@ public class PacienteServicioTestUnitaria {
         when(pacienteRepository.findById(1)).thenReturn(Optional.of(this.paciente));
         Paciente paciente = pacienteService.findOne(1);
         assertNotNull(paciente);
-        assertEquals("Carlos", paciente.getNombre());
+        assertEquals("Angel", paciente.getNombre());
     }
 
     @Test
@@ -69,25 +69,25 @@ public class PacienteServicioTestUnitaria {
         when(pacienteRepository.save(paciente)).thenReturn(paciente);
         Paciente paciente1 = pacienteService.save(paciente);
         assertNotNull(paciente1);
-        assertEquals("Carlos", paciente1.getNombre());
+        assertEquals("Angel", paciente1.getNombre());
     }
 
     @Test
     public void testUpdateExistente() {
         Paciente pacienteActualizado = new Paciente();
-        pacienteActualizado.setCedula("1102987654");
-        pacienteActualizado.setNombre("Carlos Modificado");
-        pacienteActualizado.setApellido("Martínez");
+        pacienteActualizado.setCedula("1754399507");
+        pacienteActualizado.setNombre("Angel");
+        pacienteActualizado.setApellido("Flores");
         pacienteActualizado.setFechaNacimiento(new Date());
-        pacienteActualizado.setDireccion("Calle Nueva");
-        pacienteActualizado.setTelefono("0987654321");
-        pacienteActualizado.setCorreo("carlos.mod@ejemplo.com");
+        pacienteActualizado.setDireccion("Calle noverias");
+        pacienteActualizado.setTelefono("0983701160");
+        pacienteActualizado.setCorreo("Angel@ejemplo.com");
 
         when(pacienteRepository.findById(1)).thenReturn(Optional.of(paciente));
         when(pacienteRepository.save(any())).thenReturn(pacienteActualizado);
         Paciente pacienteResultado = pacienteService.update(1, pacienteActualizado);
         assertNotNull(pacienteResultado);
-        assertEquals("Carlos Modificado", pacienteResultado.getNombre());
+        assertEquals("Angel", pacienteResultado.getNombre());
         verify(pacienteRepository, times(1)).save(paciente);
     }
 

@@ -30,11 +30,11 @@ public class DoctorServicioTestUnitaria {
     public void setUp() {
         doctor = new Doctor();
         doctor.setIdDoctor(1);
-        doctor.setNombre("Ana");
-        doctor.setApellido("Pérez");
-        doctor.setEspecialidad("Pediatría");
-        doctor.setTelefono("0987654321");
-        doctor.setCorreo("ana.perez@ejemplo.com");
+        doctor.setNombre("Angel");
+        doctor.setApellido("Flores");
+        doctor.setEspecialidad("Cardiologo");
+        doctor.setTelefono("0983701160");
+        doctor.setCorreo("Angel@ejemplo.com");
     }
 
     @Test
@@ -51,7 +51,7 @@ public class DoctorServicioTestUnitaria {
         when(doctorRepository.findById(1)).thenReturn(Optional.of(this.doctor));
         Doctor doctor = doctorService.findOne(1);
         assertNotNull(doctor);
-        assertEquals("Ana", doctor.getNombre());
+        assertEquals("Angel", doctor.getNombre());
     }
 
     @Test
@@ -66,23 +66,23 @@ public class DoctorServicioTestUnitaria {
         when(doctorRepository.save(doctor)).thenReturn(doctor);
         Doctor doctor1 = doctorService.save(doctor);
         assertNotNull(doctor1);
-        assertEquals("Ana", doctor1.getNombre());
+        assertEquals("Angel", doctor1.getNombre());
     }
 
     @Test
     public void testUpdateExistente() {
         Doctor doctorActualizado = new Doctor();
-        doctorActualizado.setNombre("Ana Modificada");
-        doctorActualizado.setApellido("Pérez Mod");
-        doctorActualizado.setEspecialidad("Dermatología");
-        doctorActualizado.setTelefono("0911223344");
-        doctorActualizado.setCorreo("ana.mod@ejemplo.com");
+        doctorActualizado.setNombre("Angel");
+        doctorActualizado.setApellido("Flores");
+        doctorActualizado.setEspecialidad("Corazon");
+        doctorActualizado.setTelefono("0983701160");
+        doctorActualizado.setCorreo("Angel@ejemplo.com");
 
         when(doctorRepository.findById(1)).thenReturn(Optional.of(doctor));
         when(doctorRepository.save(any())).thenReturn(doctorActualizado);
         Doctor doctorResultado = doctorService.update(1, doctorActualizado);
         assertNotNull(doctorResultado);
-        assertEquals("Ana Modificada", doctorResultado.getNombre());
+        assertEquals("Angel", doctorResultado.getNombre());
         verify(doctorRepository, times(1)).save(doctor);
     }
 

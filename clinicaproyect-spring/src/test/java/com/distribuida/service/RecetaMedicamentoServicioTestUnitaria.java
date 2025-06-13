@@ -45,9 +45,9 @@ public class RecetaMedicamentoServicioTestUnitaria {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        receta = new Receta(1, "Tomar con comida", new Date(), null);
-        medicamento = new Medicamento(1, "Paracetamol", "500mg", "Analgésico");
-        recetaMedicamento = new RecetaMedicamento(receta, medicamento);
+        receta = new Receta(1, "Tomar despues de cada comida", new Date(), null);
+        medicamento = new Medicamento(1, "Ibuprofeno", "200mg", "Analgésico y relajante");
+        recetaMedicamento = new RecetaMedicamento(1, receta, medicamento);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class RecetaMedicamentoServicioTestUnitaria {
         when(recetaMedicamentoRepository.findById(1)).thenReturn(Optional.of(recetaMedicamento));
         RecetaMedicamento resultado = recetaMedicamentoService.findOne(1);
         assertNotNull(resultado);
-        assertEquals("Paracetamol", resultado.getMedicamento().getNombre());
+        assertEquals("Ibuprofeno", resultado.getMedicamento().getNombre());
         verify(recetaMedicamentoRepository, times(1)).findById(1);
     }
 
@@ -73,14 +73,14 @@ public class RecetaMedicamentoServicioTestUnitaria {
         when(recetaMedicamentoRepository.save(recetaMedicamento)).thenReturn(recetaMedicamento);
         RecetaMedicamento resultado = recetaMedicamentoService.save(recetaMedicamento);
         assertNotNull(resultado);
-        assertEquals("Paracetamol", resultado.getMedicamento().getNombre());
+        assertEquals("Ibuprofeno", resultado.getMedicamento().getNombre());
         verify(recetaMedicamentoRepository, times(1)).save(recetaMedicamento);
     }
 
     @Test
     public void testUpdate() {
         Medicamento nuevoMedicamento = new Medicamento(2, "Ibuprofeno", "200mg", "Antiinflamatorio");
-        RecetaMedicamento actualizado = new RecetaMedicamento(receta, nuevoMedicamento);
+        RecetaMedicamento actualizado = new RecetaMedicamento(1, receta, nuevoMedicamento);
 
         when(recetaMedicamentoRepository.findById(1)).thenReturn(Optional.of(recetaMedicamento));
         when(recetaRepository.findById(1)).thenReturn(Optional.of(receta));

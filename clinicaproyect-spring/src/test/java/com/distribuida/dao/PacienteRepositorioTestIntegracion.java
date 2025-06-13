@@ -60,7 +60,7 @@ public class PacienteRepositorioTestIntegracion {
 
     @Test
     public void update() {
-        Optional<Paciente> paciente = pacienteRepository.findById(101); // Cambia por un ID existente
+        Optional<Paciente> paciente = pacienteRepository.findById(10); // Cambia por un ID existente
 
         assertTrue(paciente.isPresent(), "El paciente con id = 101 debe existir para ser actualizado.");
 
@@ -80,10 +80,10 @@ public class PacienteRepositorioTestIntegracion {
 
     @Test
     public void delete() {
-        if (pacienteRepository.existsById(100)) { // Cambia por un ID existente
-            pacienteRepository.deleteById(100);
+        if (pacienteRepository.existsById(101)) { // Cambia por un ID existente
+            pacienteRepository.deleteById(101);
         }
-        assertFalse(pacienteRepository.existsById(100), "El id = 100 debería haberse eliminado.");
+        assertFalse(pacienteRepository.existsById(101), "El id = 100 debería haberse eliminado.");
     }
 
 }

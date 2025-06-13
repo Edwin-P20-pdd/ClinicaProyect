@@ -8,6 +8,7 @@ import java.util.Date;
 @Table(name = "paciente")
 
 public class Paciente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_paciente")

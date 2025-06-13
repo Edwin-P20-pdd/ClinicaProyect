@@ -40,7 +40,7 @@ public class RecetaServicioTestUnitaria {
         MockitoAnnotations.openMocks(this);
 
         cita = new Cita(1, new Date(), "Chequeo general", null, null);
-        receta = new Receta(1, "Tomar dos veces al día", new Date(), cita);
+        receta = new Receta(1, "Tomar despues de cada comida", new Date(), cita);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class RecetaServicioTestUnitaria {
         when(recetaRepository.findById(1)).thenReturn(Optional.of(receta));
         Receta resultado = recetaService.findOne(1);
         assertNotNull(resultado);
-        assertEquals("Tomar dos veces al día", resultado.getDescripcion());
+        assertEquals("Tomar despues de cada comida", resultado.getDescripcion());
         verify(recetaRepository, times(1)).findById(1);
     }
 
@@ -66,13 +66,13 @@ public class RecetaServicioTestUnitaria {
         when(recetaRepository.save(receta)).thenReturn(receta);
         Receta resultado = recetaService.save(receta);
         assertNotNull(resultado);
-        assertEquals("Tomar dos veces al día", resultado.getDescripcion());
+        assertEquals("Tomar despues de cada comida", resultado.getDescripcion());
         verify(recetaRepository, times(1)).save(receta);
     }
 
     @Test
     public void testUpdate() {
-        Receta recetaActualizada = new Receta(1, "Tomar una vez al día", new Date(), cita);
+        Receta recetaActualizada = new Receta(1, "Tomar despues de cada comida", new Date(), cita);
 
         when(recetaRepository.findById(1)).thenReturn(Optional.of(receta));
         when(citaRepository.findById(1)).thenReturn(Optional.of(cita));
@@ -80,7 +80,7 @@ public class RecetaServicioTestUnitaria {
 
         Receta resultado = recetaService.update(1, 1, recetaActualizada);
         assertNotNull(resultado);
-        assertEquals("Tomar una vez al día", resultado.getDescripcion());
+        assertEquals("Tomar despues de cada comida", resultado.getDescripcion());
         verify(recetaRepository).save(any(Receta.class));
     }
 

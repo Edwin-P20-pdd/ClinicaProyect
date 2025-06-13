@@ -5,6 +5,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "receta_medicamento")
 public class RecetaMedicamento {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_receta_medicamento")
+    private int idRecetaMedicamento;
     @ManyToOne
     @JoinColumn(name = "id_receta")
     private Receta receta;
@@ -15,9 +20,18 @@ public class RecetaMedicamento {
     public RecetaMedicamento() {
     }
 
-    public RecetaMedicamento(Receta receta, Medicamento medicamento) {
+    public RecetaMedicamento(int idRecetaMedicamento, Receta receta, Medicamento medicamento) {
+        this.idRecetaMedicamento = idRecetaMedicamento;
         this.receta = receta;
         this.medicamento = medicamento;
+    }
+
+    public int getIdRecetaMedicamento() {
+        return idRecetaMedicamento;
+    }
+
+    public void setIdRecetaMedicamento(int idRecetaMedicamento) {
+        this.idRecetaMedicamento = idRecetaMedicamento;
     }
 
     public Receta getReceta() {
@@ -38,8 +52,9 @@ public class RecetaMedicamento {
 
     @Override
     public String toString() {
-        return "RecetaMedica{" +
-                "receta=" + receta +
+        return "RecetaMedicamento{" +
+                "idRecetaMedicamento=" + idRecetaMedicamento +
+                ", receta=" + receta +
                 ", medicamento=" + medicamento +
                 '}';
     }

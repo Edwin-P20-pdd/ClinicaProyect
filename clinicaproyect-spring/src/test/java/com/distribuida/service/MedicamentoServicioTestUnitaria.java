@@ -30,9 +30,9 @@ public class MedicamentoServicioTestUnitaria {
     public void setUp() {
         medicamento = new Medicamento();
         medicamento.setIdMedicamento(1);
-        medicamento.setNombre("Paracetamol");
-        medicamento.setDosis("500mg");
-        medicamento.setDescripcion("Analgésico y antipirético");
+        medicamento.setNombre("Ibuprofeno");
+        medicamento.setDosis("200mg");
+        medicamento.setDescripcion("Analgésico y relajante");
     }
 
     @Test
@@ -49,7 +49,7 @@ public class MedicamentoServicioTestUnitaria {
         when(medicamentoRepository.findById(1)).thenReturn(Optional.of(this.medicamento));
         Medicamento medicamento = medicamentoService.findOne(1);
         assertNotNull(medicamento);
-        assertEquals("Paracetamol", medicamento.getNombre());
+        assertEquals("Ibuprofeno", medicamento.getNombre());
     }
 
     @Test
@@ -64,15 +64,15 @@ public class MedicamentoServicioTestUnitaria {
         when(medicamentoRepository.save(medicamento)).thenReturn(medicamento);
         Medicamento medicamento1 = medicamentoService.save(medicamento);
         assertNotNull(medicamento1);
-        assertEquals("Paracetamol", medicamento1.getNombre());
+        assertEquals("Ibuprofeno", medicamento1.getNombre());
     }
 
     @Test
     public void testUpdateExistente() {
         Medicamento medicamentoActualizado = new Medicamento();
         medicamentoActualizado.setNombre("Ibuprofeno");
-        medicamentoActualizado.setDosis("400mg");
-        medicamentoActualizado.setDescripcion("Antiinflamatorio no esteroideo");
+        medicamentoActualizado.setDosis("200mg");
+        medicamentoActualizado.setDescripcion("Antiinflamatorio");
 
         when(medicamentoRepository.findById(1)).thenReturn(Optional.of(medicamento));
         when(medicamentoRepository.save(any())).thenReturn(medicamentoActualizado);
