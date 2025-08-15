@@ -17,9 +17,9 @@ logs/
 .vscode/
 
 clinica-app/node_modules/
-libro-app/dist/
-libro-app/ .angular/
-libro-app/ .vscode/
+clinica-app/dist/
+clinica-app/ .angular/
+clinica-app/ .vscode/
 
 *.env
 *.local
