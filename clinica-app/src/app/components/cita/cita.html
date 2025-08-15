@@ -1,0 +1,146 @@
+<div class="container mt-4">
+  <h1>Cita</h1>
+  <div class="d-flex justify-content-center mb-3">
+    <button mat-raised-button color="primary" (click)="abrirModal()">
+      <mat-icon>add</mat-icon>Agregar Cita
+    </button>
+  </div>
+
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Buscar</mat-label>
+    <input matInput (keyup)="filtroCita($event)" placeholder="Buscar cita...">
+  </mat-form-field>
+
+  <div class="table-responsive">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100">
+      <!-- Botón de detalles -->
+      <ng-container matColumnDef="detalles">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let c">
+          <button mat-icon-button color="primary" (click)="abrirModalDetalles(c)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- ID -->
+      <ng-container matColumnDef="idCita">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let c">{{ c.idCita }}</td>
+      </ng-container>
+
+      <!-- Fecha -->
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+        <td mat-cell *matCellDef="let c">{{ c.fecha | date: 'yyyy-MM-dd' }}</td>
+      </ng-container>
+
+      <!-- Motivo -->
+      <ng-container matColumnDef="motivo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Motivo</th>
+        <td mat-cell *matCellDef="let c">{{ c.motivo }}</td>
+      </ng-container>
+
+      <!-- Paciente -->
+      <ng-container matColumnDef="paciente">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Paciente</th>
+        <td mat-cell *matCellDef="let c">{{ c.paciente?.nombre }} {{ c.paciente?.apellido }}</td>
+      </ng-container>
+
+      <!-- Doctor -->
+      <ng-container matColumnDef="doctor">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Doctor</th>
+        <td mat-cell *matCellDef="let c">{{ c.doctor?.nombre }} {{ c.doctor?.apellido }}</td>
+      </ng-container>
+
+      <!-- Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
+        <td mat-cell *matCellDef="let c">
+          <div class="d-flex gap-1">
+            <button class="btn btn-warning btn-sm me-1" (click)="abrirModal(c)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="cita = c; delete()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="mostrarColumnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: mostrarColumnas"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButton></mat-paginator>
+  </div>
+
+  <!-- Modal para agregar/editar -->
+  <ng-template #modalCita>
+    <mat-dialog-content>
+      <h2 mat-dialog-title>{{ editar ? 'Editar Cita' : 'Agregar Cita' }}</h2>
+      <form #formularioCita="ngForm" novalidate>
+        <div class="row">
+          <!-- Fecha -->
+          <div class="col-md-6 mb-2">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Fecha</mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="cita.fecha" name="fecha" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <!-- Motivo -->
+          <div class="col-md-6 mb-2">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Motivo</mat-label>
+              <input matInput type="text" [(ngModel)]="cita.motivo" name="motivo" required>
+            </mat-form-field>
+          </div>
+
+          <!-- Paciente -->
+          <div class="col-md-6 mb-2">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Paciente</mat-label>
+              <mat-select [(ngModel)]="cita.paciente" name="paciente" required [compareWith]="compararPacientes">
+                <mat-option *ngFor="let p of pacientes" [value]="p">{{ p.nombre }} {{ p.apellido }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Doctor -->
+          <div class="col-md-6 mb-2">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Doctor</mat-label>
+              <mat-select [(ngModel)]="cita.doctor" name="doctor" required [compareWith]="compararDoctores">
+                <mat-option *ngFor="let d of doctores" [value]="d">{{ d.nombre }} {{ d.apellido }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button mat-flat-button color="primary" (click)="guardarCita()" [disabled]="formularioCita.invalid">
+        {{ editar ? 'Actualizar' : 'Guardar' }}
+      </button>
+    </mat-dialog-actions>
+  </ng-template>
+
+  <!-- Modal para detalles -->
+  <ng-template #modalDetalles let-data>
+    <h2 mat-dialog-title>Detalles de la Cita</h2>
+    <mat-dialog-content>
+      <p><strong>ID:</strong> {{ citaSeleccionada?.idCita }}</p>
+      <p><strong>Fecha:</strong> {{ citaSeleccionada?.fecha | date: 'yyyy-MM-dd' }}</p>
+      <p><strong>Motivo:</strong> {{ citaSeleccionada?.motivo }}</p>
+      <p><strong>Paciente:</strong> {{ citaSeleccionada?.paciente?.nombre }} {{ citaSeleccionada?.paciente?.apellido }}</p>
+      <p><strong>Doctor:</strong> {{ citaSeleccionada?.doctor?.nombre }} {{ citaSeleccionada?.doctor?.apellido }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="cerrarModal()">Cerrar</button>
+    </mat-dialog-actions>
+  </ng-template>
+</div>
