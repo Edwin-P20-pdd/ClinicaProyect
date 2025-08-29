@@ -28,7 +28,21 @@ export class CitaComponent implements OnInit {
   dataSource!: MatTableDataSource<Cita>;
   citaSeleccionada: Cita | null = null;
 
-  mostrarColumnas: String[] = ['detalles', 'idCita', 'fecha', 'motivo', 'paciente', 'doctor', 'acciones'];
+  mostrarColumnas: string[] = [
+  'detalles',
+  'idCita',
+  'fecha',
+  'motivo',
+  'cedulaPaciente',
+  'paciente',
+  'fechaNacimientoPaciente',
+  'direccionPaciente',
+  'telefonoPaciente',
+  'correoPaciente',
+  'doctor',
+  'acciones'
+];
+
 
   @ViewChild('formularioCita') formularioCita!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
