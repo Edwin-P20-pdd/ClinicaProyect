@@ -1,3 +1,36 @@
+<mat-toolbar color="primary" class="topbar">
+  <a mat-button class="brand" routerLink="/pacientes">
+    <mat-icon class="brand-logo" fontSet="material-icons-outlined" fontIcon="local_hospital"></mat-icon>
+    <span class="brand-name">Clínica XYZ</span>
+  </a>
+
+  <a mat-button routerLink="/pacientes" routerLinkActive="active">
+    <mat-icon fontSet="material-icons-outlined">people</mat-icon>
+    <span>Pacientes</span>
+  </a>
+  <a mat-button routerLink="/doctores" routerLinkActive="active">
+    <mat-icon fontSet="material-icons-outlined">medical_services</mat-icon>
+    <span>Doctores</span>
+  </a>
+  <a mat-button routerLink="/recetas" routerLinkActive="active">
+    <mat-icon fontSet="material-icons-outlined">receipt</mat-icon>
+    <span>Recetas</span>
+  </a>
+  <a mat-button routerLink="/citas" routerLinkActive="active">
+    <mat-icon fontSet="material-icons-outlined">event</mat-icon>
+    <span>Citas</span>
+  </a>
+  <a mat-button routerLink="/medicamentos" routerLinkActive="active">
+    <mat-icon fontSet="material-icons-outlined">local_pharmacy</mat-icon>
+    <span>Medicamentos</span>
+  </a>
+  <a mat-button routerLink="/recetasMedicamentos" routerLinkActive="active">
+    <mat-icon fontSet="material-icons-outlined">medication</mat-icon>
+    <span>Recetas Medicamentos</span>
+  </a>
+</mat-toolbar>
+
+
 <div class="container mt-4">
   <h1>Cita</h1>
   <div class="d-flex justify-content-center mb-3">
@@ -167,8 +200,14 @@
       <p><strong>ID:</strong> {{ citaSeleccionada?.idCita }}</p>
       <p><strong>Fecha:</strong> {{ citaSeleccionada?.fecha | date: 'yyyy-MM-dd' }}</p>
       <p><strong>Motivo:</strong> {{ citaSeleccionada?.motivo }}</p>
+
       <p><strong>Paciente:</strong> {{ citaSeleccionada?.paciente?.nombre }} {{ citaSeleccionada?.paciente?.apellido }}
       </p>
+      <p><strong>Fecha de Nacimiento:</strong> {{citaSeleccionada?.paciente?.fechaNacimiento}} </p>
+      <p><strong>Dirección del Paciente:</strong> {{citaSeleccionada?.paciente?.direccion}} </p>
+      <p><strong>Teléfono del Paciente:</strong> {{citaSeleccionada?.paciente?.telefono}} </p>
+      <p><strong>Correo:</strong> {{citaSeleccionada?.paciente?.correo}} </p>
+
       <p><strong>Doctor:</strong> {{ citaSeleccionada?.doctor?.nombre }} {{ citaSeleccionada?.doctor?.apellido }}</p>
     </mat-dialog-content>
     <mat-dialog-actions align="end">

@@ -26,6 +26,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RecetaComponent } from './components/receta/receta';
 import { RecetaMedicamentoComponent } from './components/receta-medicamento/receta-medicamento';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { RecetaMedicamentoComponent } from './components/receta-medicamento/rece
     MatSelectModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatToolbarModule,
+    MatCardModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()

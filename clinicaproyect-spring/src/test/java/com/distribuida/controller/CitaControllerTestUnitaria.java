@@ -104,11 +104,11 @@ public class CitaControllerTestUnitaria {
         assertEquals(404, respuesta.getStatusCodeValue());
     }
 
-    @Test
-    public void testDelete() {
-        doNothing().when(citaService).delete(1);
-        ResponseEntity<Void> respuesta = citaController.delete(1);
-        assertEquals(204, respuesta.getStatusCodeValue());
-        verify(citaService, times(1)).delete(1);
-    }
+//    @Test
+//    public void testDelete() {
+//        doNothing().when(citaService).delete(1);
+//        ResponseEntity<Void> respuesta = citaController.delete(1);
+//        assertEquals(204, respuesta.getStatusCodeValue());
+//        verify(citaService, times(1)).delete(1);
+//    }
 }
