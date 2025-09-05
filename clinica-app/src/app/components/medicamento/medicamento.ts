@@ -21,7 +21,7 @@ export class MedicamentoComponent implements OnInit {
   idEditar: number | null = null;
 
   dataSource!: MatTableDataSource<Medicamento>;
-  mostrarColumnas: String[] = ['idMedicamento', 'nombre', 'dosis', 'descripcion', 'acciones'];
+  mostrarColumnas: String[] = ['idMedicamento', 'nombre', 'dosis', 'descripcion','precio','stock', 'acciones'];
 
   @ViewChild('formularioMedicamento') formularioMedicamento!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

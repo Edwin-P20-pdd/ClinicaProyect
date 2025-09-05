@@ -87,7 +87,7 @@ public class RecetaMedicamentoServicioTestUnitaria {
         when(medicamentoRepository.findById(2)).thenReturn(Optional.of(nuevoMedicamento));
         when(recetaMedicamentoRepository.save(any(RecetaMedicamento.class))).thenReturn(actualizado);
 
-        RecetaMedicamento resultado = recetaMedicamentoService.update(1, 1, 2, actualizado);
+        RecetaMedicamento resultado = recetaMedicamentoService.update(1, actualizado);
         assertNotNull(resultado);
         assertEquals("Ibuprofeno", resultado.getMedicamento().getNombre());
         verify(recetaMedicamentoRepository).save(any(RecetaMedicamento.class));

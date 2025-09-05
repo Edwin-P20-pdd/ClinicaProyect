@@ -41,12 +41,12 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public Cita update(int id, int idPaciente, int idDoctor, Cita citaNueva) {
+    public Cita update(int id, Cita citaNueva) {
         Cita citaExistente = findOne(id);
 
-        Optional<Paciente> pacienteExistente = pacienteRepository.findById(idPaciente);
-
-        Optional<Doctor> doctorExistente = doctorRepository.findById(idDoctor);
+//        Optional<Paciente> pacienteExistente = pacienteRepository.findById(idPaciente);
+//
+//        Optional<Doctor> doctorExistente = doctorRepository.findById(idDoctor);
 
         if (citaExistente == null) {
             return null;
@@ -54,8 +54,8 @@ public class CitaServiceImpl implements CitaService {
 
         citaExistente.setFecha(citaNueva.getFecha());
         citaExistente.setMotivo(citaNueva.getMotivo());
-        citaExistente.setPaciente(pacienteExistente.orElse(null));
-        citaExistente.setDoctor(doctorExistente.orElse(null));
+//        citaExistente.setPaciente(pacienteExistente.orElse(null));
+//        citaExistente.setDoctor(doctorExistente.orElse(null));
 
         return citaRepository.save(citaExistente);
     }

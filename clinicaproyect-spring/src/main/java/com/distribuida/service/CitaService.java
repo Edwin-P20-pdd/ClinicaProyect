@@ -12,7 +12,7 @@ public interface CitaService {
 
     public Cita save(Cita cita);
 
-    public Cita update(int id,int idPaciente, int idDoctor, Cita cita);
+    public Cita update(int id, Cita cita);
 
     public void delete(int id);
 }

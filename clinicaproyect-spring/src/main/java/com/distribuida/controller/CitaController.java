@@ -36,14 +36,12 @@ public class CitaController {
         return ResponseEntity.ok(nuevaCita);
     }
 
-    @PutMapping("/{id}/{idPaciente}/{idDoctor}")
+    @PutMapping("/{id}")
     public ResponseEntity<Cita> update(
             @PathVariable int id,
-            @PathVariable int idPaciente,
-            @PathVariable int idDoctor,
             @RequestBody Cita cita) {
 
-        Cita citaActualizada = citaService.update(id, idPaciente, idDoctor, cita);
+        Cita citaActualizada = citaService.update(id, cita);
         if (citaActualizada == null) {
             return ResponseEntity.notFound().build();
         }

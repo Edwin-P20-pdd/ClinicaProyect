@@ -28,6 +28,10 @@ import { RecetaComponent } from './components/receta/receta';
 import { RecetaMedicamentoComponent } from './components/receta-medicamento/receta-medicamento';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import {  MedicamentosListComponent } from './components/medicamentos-list/medicamentos-list';
+import {  CarritoComponent } from './components/carrito/carrito';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,9 @@ import { MatCardModule } from '@angular/material/card';
     DoctorComponent,
     CitaComponent,
     RecetaComponent,
-    RecetaMedicamentoComponent
+    RecetaMedicamentoComponent,
+    MedicamentosListComponent,
+    CarritoComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +65,9 @@ import { MatCardModule } from '@angular/material/card';
     MatDatepickerModule,
     MatNativeDateModule,
     MatToolbarModule,
-    MatCardModule
+    MatCardModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     provideBrowserGlobalErrorListeners()

@@ -16,7 +16,6 @@ public class RecetaMedicamento {
     @ManyToOne
     @JoinColumn(name = "id_medicamento")
     private Medicamento medicamento;
-    //abajo
     public RecetaMedicamento() {
     }
 

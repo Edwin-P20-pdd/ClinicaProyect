@@ -87,7 +87,7 @@ public class CitaServicioTestUnitaria {
         when(doctorRepository.findById(1)).thenReturn(Optional.of(doctor));
         when(citaRepository.save(any(Cita.class))).thenReturn(citaActualizada);
 
-        Cita resultado = citaService.update(1, 1, 1, citaActualizada);
+        Cita resultado = citaService.update(1, citaActualizada);
         assertNotNull(resultado);
         assertEquals("Chequeo anual", resultado.getMotivo());
         verify(citaRepository).save(any(Cita.class));

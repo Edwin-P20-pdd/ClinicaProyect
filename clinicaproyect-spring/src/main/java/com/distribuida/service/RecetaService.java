@@ -12,7 +12,7 @@ public interface RecetaService {
 
     public Receta save(Receta receta);
 
-    public Receta update(int id,int idCita, Receta receta);
+    public Receta update(int id, Receta receta);
 
     public void delete(int id);
 }

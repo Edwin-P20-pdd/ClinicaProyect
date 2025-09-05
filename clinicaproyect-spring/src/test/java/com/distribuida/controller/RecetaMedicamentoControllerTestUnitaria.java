@@ -84,17 +84,17 @@ public class RecetaMedicamentoControllerTestUnitaria {
 
     @Test
     public void testUpdateExistente() {
-        when(recetaMedicamentoService.update(eq(1), eq(1), eq(1), any(RecetaMedicamento.class)))
+        when(recetaMedicamentoService.update(eq(1), any(RecetaMedicamento.class)))
                 .thenReturn(recetaMedicamento);
-        ResponseEntity<RecetaMedicamento> respuesta = recetaMedicamentoController.update(1, 1, 1, recetaMedicamento);
+        ResponseEntity<RecetaMedicamento> respuesta = recetaMedicamentoController.update(1, recetaMedicamento);
         assertEquals(200, respuesta.getStatusCodeValue());
     }
 
     @Test
     public void testUpdateNoExistente() {
-        when(recetaMedicamentoService.update(eq(2), eq(2), eq(2), any(RecetaMedicamento.class)))
+        when(recetaMedicamentoService.update(eq(2), any(RecetaMedicamento.class)))
                 .thenReturn(null);
-        ResponseEntity<RecetaMedicamento> respuesta = recetaMedicamentoController.update(2, 2, 2, recetaMedicamento);
+        ResponseEntity<RecetaMedicamento> respuesta = recetaMedicamentoController.update(2, recetaMedicamento);
         assertEquals(404, respuesta.getStatusCodeValue());
     }
 

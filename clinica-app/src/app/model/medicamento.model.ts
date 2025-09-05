@@ -3,4 +3,8 @@ export interface Medicamento{
     nombre: string
     dosis: string
     descripcion: string
+    precio: number
+    stock: number
+
+    [key: string]: any;
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-// Aquí se gestiona la lógica de negocio
+// Servicio que gestiona la lógica de negocio para Medicamento
 
 @Service
 public class MedicamentoServiceImpl implements MedicamentoService {
@@ -43,6 +43,8 @@ public class MedicamentoServiceImpl implements MedicamentoService {
         medicamentoExistente.setNombre(medicamentoNuevo.getNombre());
         medicamentoExistente.setDosis(medicamentoNuevo.getDosis());
         medicamentoExistente.setDescripcion(medicamentoNuevo.getDescripcion());
+        medicamentoExistente.setPrecio(medicamentoNuevo.getPrecio());
+        medicamentoExistente.setStock(medicamentoNuevo.getStock());
 
         return medicamentoRepository.save(medicamentoExistente);
     }

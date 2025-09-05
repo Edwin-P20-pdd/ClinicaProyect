@@ -78,7 +78,7 @@ public class RecetaServicioTestUnitaria {
         when(citaRepository.findById(1)).thenReturn(Optional.of(cita));
         when(recetaRepository.save(any(Receta.class))).thenReturn(recetaActualizada);
 
-        Receta resultado = recetaService.update(1, 1, recetaActualizada);
+        Receta resultado = recetaService.update(1, recetaActualizada);
         assertNotNull(resultado);
         assertEquals("Tomar despues de cada comida", resultado.getDescripcion());
         verify(recetaRepository).save(any(Receta.class));

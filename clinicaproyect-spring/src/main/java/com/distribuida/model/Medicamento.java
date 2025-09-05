@@ -10,23 +10,36 @@ public class Medicamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_medicamento")
     private int idMedicamento;
+
     @Column(name = "nombre")
     private String nombre;
+
     @Column(name = "dosis")
     private String dosis;
+
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Column(name = "precio")
+    private double precio;
+
+    @Column(name = "stock")
+    private int stock;
+
+    // 🔹 Constructores
     public Medicamento() {
     }
 
-    public Medicamento(int idMedicamento, String nombre, String dosis, String descripcion) {
+    public Medicamento(int idMedicamento, String nombre, String dosis, String descripcion, double precio, int stock) {
         this.idMedicamento = idMedicamento;
         this.nombre = nombre;
         this.dosis = dosis;
         this.descripcion = descripcion;
+        this.precio = precio;
+        this.stock = stock;
     }
 
+    // 🔹 Getters y Setters
     public int getIdMedicamento() {
         return idMedicamento;
     }
@@ -59,6 +72,23 @@ public class Medicamento {
         this.descripcion = descripcion;
     }
 
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    // 🔹 toString()
     @Override
     public String toString() {
         return "Medicamento{" +
@@ -66,7 +96,8 @@ public class Medicamento {
                 ", nombre='" + nombre + '\'' +
                 ", dosis='" + dosis + '\'' +
                 ", descripcion='" + descripcion + '\'' +
+                ", precio=" + precio +
+                ", stock=" + stock +
                 '}';
     }
-
 }

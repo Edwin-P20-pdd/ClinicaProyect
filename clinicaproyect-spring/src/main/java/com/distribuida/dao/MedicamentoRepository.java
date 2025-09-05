@@ -7,4 +7,5 @@ public interface MedicamentoRepository extends JpaRepository<Medicamento, Intege
 
     Medicamento findByNombre(String nombre);
 
+
 }

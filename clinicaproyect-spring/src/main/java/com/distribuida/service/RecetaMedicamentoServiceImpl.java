@@ -41,17 +41,17 @@ public class RecetaMedicamentoServiceImpl implements RecetaMedicamentoService{
     }
 
     @Override
-    public RecetaMedicamento update(int id, int idReceta, int idMedicamento, RecetaMedicamento recetaMedicamentoNueva) {
+    public RecetaMedicamento update(int id, RecetaMedicamento recetaMedicamentoNueva) {
         RecetaMedicamento recetaMedicamentoexistente = findOne(id);
-        Optional<Receta> recetaExistente = recetaRepository.findById(idReceta);
-        Optional<Medicamento> medicamentoExistente = medicamentoRepository.findById(idMedicamento);
+//        Optional<Receta> recetaExistente = recetaRepository.findById(idReceta);
+//        Optional<Medicamento> medicamentoExistente = medicamentoRepository.findById(idMedicamento);
 
         if (recetaMedicamentoexistente == null) {
             return null;
         }
 
-        recetaMedicamentoexistente.setReceta(recetaExistente.orElse(null));
-        recetaMedicamentoexistente.setMedicamento(medicamentoExistente.orElse(null));
+//        recetaMedicamentoexistente.setReceta(recetaExistente.orElse(null));
+//        recetaMedicamentoexistente.setMedicamento(medicamentoExistente.orElse(null));
 
         return recetaMedicamentoRepository.save(recetaMedicamentoexistente);
     }

@@ -7,49 +7,48 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Entity
-@Table(name = "carrito_item"
-, uniqueConstraints = @UniqueConstraint(columnNames = {"id_carrito", "id_libro"}))
+@Table(name="carrito_item"
+        , uniqueConstraints = @UniqueConstraint(columnNames = {"id_carrito", "id_medicamento"}))
 public class CarritoItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_carrito_item")
+    @Column(name="id_carrito_item")
     private Long idCarritoItem;
 
     @JsonBackReference
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_carrito")
+    @JoinColumn(name="id_carrito")
     private Carrito carrito;
 
-    @JsonIgnoreProperties({"autor", "categoria"})
+
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_medicamento")
     private Medicamento medicamento;
 
-    @Column(name = "cantidad")
+    @Column(name="cantidad")
     private Integer cantidad;
 
-    @Column(name = "precio_unitario", precision = 12, scale = 2)
+    @Column(name="precio_unitario", precision = 12, scale = 2)
     private BigDecimal precioUnitario;
 
-    @Column(name = "total", precision = 12, scale = 2)
+    @Column(name="total", precision = 12 , scale = 2)
     private BigDecimal total;
 
-    @PrePersist
-    @PreUpdate
+    @PrePersist @PreUpdate
     public void jpaCalcTotal(){
         calcTotal();
     }
 
     public void calcTotal(){
         if(precioUnitario == null) precioUnitario = BigDecimal.ZERO;
-        if (cantidad == null) cantidad = 0;
+        if(cantidad == null) cantidad = 0;
         total = precioUnitario.multiply(BigDecimal.valueOf(cantidad))
                 .setScale(2, RoundingMode.HALF_UP);
     }
-
 
 
     // getters and setters
@@ -73,7 +72,7 @@ public class CarritoItem {
         return medicamento;
     }
 
-    public void setLibro(Medicamento medicamento) {
+    public void setMedicamento(Medicamento medicamento) {
         this.medicamento = medicamento;
     }
 

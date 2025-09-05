@@ -92,15 +92,15 @@ public class CitaControllerTestUnitaria {
 
     @Test
     public void testUpdateExistente() {
-        when(citaService.update(eq(1), eq(1), eq(1), any(Cita.class))).thenReturn(cita);
-        ResponseEntity<Cita> respuesta = citaController.update(1, 1, 1, cita);
+        when(citaService.update(eq(1), any(Cita.class))).thenReturn(cita);
+        ResponseEntity<Cita> respuesta = citaController.update(1, cita);
         assertEquals(200, respuesta.getStatusCodeValue());
     }
 
     @Test
     public void testUpdateNoExistente() {
-        when(citaService.update(eq(2), eq(2), eq(2), any(Cita.class))).thenReturn(null);
-        ResponseEntity<Cita> respuesta = citaController.update(2, 2, 2, cita);
+        when(citaService.update(eq(2), any(Cita.class))).thenReturn(null);
+        ResponseEntity<Cita> respuesta = citaController.update(2, cita);
         assertEquals(404, respuesta.getStatusCodeValue());
     }
 

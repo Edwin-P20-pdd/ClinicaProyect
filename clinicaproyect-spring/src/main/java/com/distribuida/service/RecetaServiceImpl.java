@@ -36,10 +36,10 @@ public class RecetaServiceImpl implements RecetaService{
     }
 
     @Override
-    public Receta update(int id, int idCita, Receta recetaNueva) {
+    public Receta update(int id, Receta recetaNueva) {
         Receta recetaExistente = findOne(id);
 
-        Optional<Cita> citaExistente = citaRepository.findById(idCita);
+//        Optional<Cita> citaExistente = citaRepository.findById(idCita);
 
         if (recetaExistente == null) {
             return null;
@@ -47,7 +47,7 @@ public class RecetaServiceImpl implements RecetaService{
 
         recetaExistente.setDescripcion(recetaNueva.getDescripcion());
         recetaExistente.setFecha(recetaNueva.getFecha());
-        recetaExistente.setCita(citaExistente.orElse(null));
+//        recetaExistente.setCita(citaExistente.orElse(null));
 
         return recetaRepository.save(recetaExistente);
     }

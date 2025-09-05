@@ -36,13 +36,12 @@ public class RecetaController {
         return ResponseEntity.ok(nuevaReceta);
     }
 
-    @PutMapping("/{id}/{idCita}")
+    @PutMapping("/{id}")
     public ResponseEntity<Receta> update(
             @PathVariable int id,
-            @PathVariable int idCita,
             @RequestBody Receta receta) {
 
-        Receta recetaActualizada = recetaService.update(id, idCita, receta);
+        Receta recetaActualizada = recetaService.update(id, receta);
         if (recetaActualizada == null) {
             return ResponseEntity.notFound().build();
         }
