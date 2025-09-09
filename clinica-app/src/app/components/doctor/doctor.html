@@ -1,0 +1,143 @@
+<!-- <mat-toolbar color="primary" class="topbar">
+    <a mat-button class="brand" routerLink="/medicamentos1">
+        <mat-icon class="brand-logo" fontSet="material-icons-outlined" fontIcon="local_hospital"></mat-icon>
+        <span class="brand-name">Clínica XYZ</span>
+    </a>
+
+    <a mat-button routerLink="/pacientes" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-outlined">people</mat-icon>
+        <span>Pacientes</span>
+    </a>
+    <a mat-button routerLink="/doctores" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-outlined">medical_services</mat-icon>
+        <span>Doctores</span>
+    </a>
+    <a mat-button routerLink="/recetas" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-outlined">receipt</mat-icon>
+        <span>Recetas</span>
+    </a>
+    <a mat-button routerLink="/citas" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-outlined">event</mat-icon>
+        <span>Citas</span>
+    </a>
+    <a mat-button routerLink="/medicamentos" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-outlined">local_pharmacy</mat-icon>
+        <span>Medicamentos</span>
+    </a>
+    <a mat-button routerLink="/recetasMedicamentos" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-outlined">medication</mat-icon>
+        <span>Recetas Medicamentos</span>
+    </a>
+
+    <a mat-stroked-button color="accent" routerLink="/carrito">
+        <mat-icon fontSet="material-icons-outlined">shopping_cart</mat-icon>
+        <span>Carrito</span>
+    </a>
+</mat-toolbar> -->
+
+
+<div class="container mt-4" #formularioDoctor>
+
+  <h2>{{ editar ? 'Editar Doctor' : 'Agregar Doctor' }}</h2>
+
+  <form (ngSubmit)="guardar(formDoctor)" #formDoctor="ngForm" novalidate>
+    <div class="row">
+      <div class="col-md-4 mb-2">
+        <input class="form-control" type="text" placeholder="Nombre"
+          [(ngModel)]="doctor.nombre" name="nombre" required #nombre="ngModel"
+          [ngClass]="{'is-invalid': nombre.invalid && nombre.touched}">
+      </div>
+      <div class="col-md-4 mb-2">
+        <input class="form-control" type="text" placeholder="Apellido"
+          [(ngModel)]="doctor.apellido" name="apellido" required #apellido="ngModel"
+          [ngClass]="{'is-invalid': apellido.invalid && apellido.touched}">
+      </div>
+      <div class="col-md-4 mb-2">
+        <input class="form-control" type="text" placeholder="Especialidad"
+          [(ngModel)]="doctor.especialidad" name="especialidad" required #especialidad="ngModel"
+          [ngClass]="{'is-invalid': especialidad.invalid && especialidad.touched}">
+      </div>
+      <div class="col-md-6 mb-2">
+        <input class="form-control" type="number" placeholder="Teléfono"
+          [(ngModel)]="doctor.telefono" name="telefono" required #telefono="ngModel"
+          [ngClass]="{'is-invalid': telefono.invalid && telefono.touched}">
+      </div>
+      <div class="col-md-6 mb-2">
+        <input class="form-control" type="email" placeholder="Correo"
+          [(ngModel)]="doctor.correo" name="correo" required #correo="ngModel"
+          [ngClass]="{'is-invalid': correo.invalid && correo.touched}">
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary me-2" [disabled]="formDoctor.invalid">
+      <mat-icon>{{ editar ? 'edit' : 'add' }}</mat-icon>
+    </button>
+    <button type="button" class="btn btn-secondary" *ngIf="editar" (click)="editarDoctorCancelar(formDoctor)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </form>
+
+  <hr class="my-4">
+
+  <h3>Lista de Doctores</h3>
+
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Buscar</mat-label>
+    <input matInput (keyup)="filtroDoctores($event)" placeholder="Buscar doctor">
+  </mat-form-field>
+
+  <div class="table-responsive">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100">
+
+      <ng-container matColumnDef="idDoctor">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let d">{{ d.idDoctor }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+        <td mat-cell *matCellDef="let d">{{ d.nombre }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="apellido">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
+        <td mat-cell *matCellDef="let d">{{ d.apellido }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="especialidad">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Especialidad</th>
+        <td mat-cell *matCellDef="let d">{{ d.especialidad }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="telefono">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Teléfono</th>
+        <td mat-cell *matCellDef="let d">{{ d.telefono }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="correo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Correo</th>
+        <td mat-cell *matCellDef="let d">{{ d.correo }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let d">
+          <div class="d-flex gap-1">
+            <button class="btn btn-warning btn-sm me-1" (click)="editarDoctor(d)">
+              <mat-icon class="me-1">edit</mat-icon>
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="doctor = d; delete()">
+              <mat-icon class="me-1">delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="mostrarColumnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: mostrarColumnas;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+  </div>
+
+</div>

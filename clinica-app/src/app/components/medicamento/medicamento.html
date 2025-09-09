@@ -1,0 +1,150 @@
+<!-- <mat-toolbar color="primary" class="topbar">
+  <a mat-button class="brand" routerLink="/medicamentos1">
+    <mat-icon class="brand-logo" fontSet="material-icons-outlined" fontIcon="local_hospital"></mat-icon>
+    <span class="brand-name">Clínica XYZ</span>
+  </a>
+
+  <a mat-button routerLink="/pacientes" routerLinkActive="active">
+    <mat-icon fontSet="material-icons-outlined">people</mat-icon>
+    <span>Pacientes</span>
+  </a>
+  <a mat-button routerLink="/doctores" routerLinkActive="active">
+    <mat-icon fontSet="material-icons-outlined">medical_services</mat-icon>
+    <span>Doctores</span>
+  </a>
+  <a mat-button routerLink="/recetas" routerLinkActive="active">
+    <mat-icon fontSet="material-icons-outlined">receipt</mat-icon>
+    <span>Recetas</span>
+  </a>
+  <a mat-button routerLink="/citas" routerLinkActive="active">
+    <mat-icon fontSet="material-icons-outlined">event</mat-icon>
+    <span>Citas</span>
+  </a>
+  <a mat-button routerLink="/medicamentos" routerLinkActive="active">
+    <mat-icon fontSet="material-icons-outlined">local_pharmacy</mat-icon>
+    <span>Medicamentos</span>
+  </a>
+  <a mat-button routerLink="/recetasMedicamentos" routerLinkActive="active">
+    <mat-icon fontSet="material-icons-outlined">medication</mat-icon>
+    <span>Recetas Medicamentos</span>
+  </a>
+
+  <a mat-stroked-button color="accent" routerLink="/carrito">
+        <mat-icon fontSet="material-icons-outlined">shopping_cart</mat-icon>
+        <span>Carrito</span>
+    </a>
+</mat-toolbar> -->
+
+<div class="container mt-4" #formularioMedicamento>
+  <h2>{{ editar ? 'Editar Medicamento' : 'Agregar Medicamento' }}</h2>
+
+  <form (ngSubmit)="guardar(formMedicamento)" #formMedicamento="ngForm" novalidate>
+    <div class="row">
+      <div class="col-md-3 mb-2">
+        <input class="form-control" type="text" placeholder="Nombre"
+          [(ngModel)]="medicamento.nombre" name="nombre" required #nombre="ngModel"
+          [ngClass]="{'is-invalid': nombre.invalid && nombre.touched}">
+      </div>
+      <div class="col-md-3 mb-2">
+        <input class="form-control" type="text" placeholder="Dosis"
+          [(ngModel)]="medicamento.dosis" name="dosis" required #dosis="ngModel"
+          [ngClass]="{'is-invalid': dosis.invalid && dosis.touched}">
+      </div>
+      <div class="col-md-3 mb-2">
+        <input class="form-control" type="text" placeholder="Descripción"
+          [(ngModel)]="medicamento.descripcion" name="descripcion" required #descripcion="ngModel"
+          [ngClass]="{'is-invalid': descripcion.invalid && descripcion.touched}">
+      </div>
+      <div class="col-md-3 mb-2">
+        <input class="form-control" type="number" step="0.01" placeholder="Precio"
+          [(ngModel)]="medicamento.precio" name="precio" required #precio="ngModel"
+          [ngClass]="{'is-invalid': precio.invalid && precio.touched}">
+      </div>
+      <div class="col-md-3 mb-2">
+        <input class="form-control" type="number" placeholder="Stock"
+          [(ngModel)]="medicamento.stock" name="stock" required #stock="ngModel"
+          [ngClass]="{'is-invalid': stock.invalid && stock.touched}">
+      </div>
+      <div class="col-md-3 mb-2">
+        <input class="form-control" type="text" placeholder="Portada"
+          [(ngModel)]="medicamento.portada" name="portada" required #portada="ngModel"
+          [ngClass]="{'is-invalid': portada.invalid && portada.touched}">
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary me-2" [disabled]="formMedicamento.invalid">
+      <mat-icon>{{ editar ? 'edit' : 'add' }}</mat-icon>
+    </button>
+    <button type="button" class="btn btn-secondary" *ngIf="editar" (click)="editarMedicamentoCancelar(formMedicamento)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </form>
+
+  <hr class="my-4">
+
+  <h3>Lista de Medicamentos</h3>
+
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Buscar</mat-label>
+    <input matInput (keyup)="filtroMedicamentos($event)" placeholder="Buscar medicamento">
+  </mat-form-field>
+
+  <div class="table-responsive">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100">
+
+      <ng-container matColumnDef="idMedicamento">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let m">{{ m.idMedicamento }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+        <td mat-cell *matCellDef="let m">{{ m.nombre }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="dosis">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Dosis</th>
+        <td mat-cell *matCellDef="let m">{{ m.dosis }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+        <td mat-cell *matCellDef="let m">{{ m.descripcion }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+        <td mat-cell *matCellDef="let m">{{ m.precio | currency:'USD':'symbol':'1.2-2' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="stock">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock</th>
+        <td mat-cell *matCellDef="let m">{{ m.stock }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="portada">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Portada</th>
+        <td mat-cell *matCellDef="let m">{{ m.portada }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let m">
+          <div class="d-flex gap-1">
+            <button class="btn btn-warning btn-sm me-1" (click)="editarMedicamento(m)">
+              <mat-icon class="me-1">edit</mat-icon>
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="medicamento = m; delete()">
+              <mat-icon class="me-1">delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="mostrarColumnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: mostrarColumnas;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<!-- <app-cita></app-cita> -->
+ <!-- <router-outlet></router-outlet> -->
+
+ <!-- <app-libro></app-libro> -->
+ <!-- <router-outlet></router-outlet> -->
+
+ <mat-sidenav-container class="shell">
+  <mat-sidenav #drawer mode="over" class="mobile-drawer">
+    <nav class="mobile-nav" (click)="drawer.close()">
+      <a mat-list-item routerLink="/medicamentos1"><mat-icon>shopping_cart</mat-icon> Compras</a>
+      <a mat-list-item routerLink="/pacientes"><mat-icon>people</mat-icon> Pacientes</a>
+      <a mat-list-item routerLink="/doctores"><mat-icon>medical_services</mat-icon> Doctores</a>
+      <a mat-list-item routerLink="/recetas"><mat-icon>receipt</mat-icon> Recetas</a>
+      <a mat-list-item routerLink="/citas"><mat-icon>event</mat-icon> Citas</a>
+      <a mat-list-item routerLink="/medicamentos"><mat-icon>local_pharmacy</mat-icon> Medicamentos</a>
+      <a mat-list-item routerLink="/recetasMedicamentos"><mat-icon>medication</mat-icon> Recetas Medicamentos</a>      
+    </nav>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="topbar">
+      <button mat-icon-button class="menu-btn" (click)="drawer.toggle()" aria-label="Abrir menú">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <a mat-button class="brand" routerLink="/medicamentos1">
+        <mat-icon class="brand-logo" fontSet="material-icons-outlined" fontIcon="local_hospital"></mat-icon>
+        <span class="brand-name">Clínica XYZ</span>
+      </a>
+
+      <nav class="links">
+        <a mat-list-item routerLink="/pacientes"><mat-icon>people</mat-icon> Pacientes</a>
+        <a mat-list-item routerLink="/doctores"><mat-icon>medical_services</mat-icon> Doctores</a>
+        <a mat-list-item routerLink="/recetas"><mat-icon>receipt</mat-icon> Recetas</a>
+        <a mat-list-item routerLink="/citas"><mat-icon>event</mat-icon> Citas</a>
+        <a mat-list-item routerLink="/medicamentos"><mat-icon>local_pharmacy</mat-icon> Medicamentos</a>
+        <a mat-list-item routerLink="/recetasMedicamentos"><mat-icon>medication</mat-icon> Recetas Medicamentos</a>
+      </nav>
+
+      <span class="spacer"></span>
+
+      <a mat-stroked-button color="accent" routerLink="/carrito" class="cart-btn">
+        <mat-icon>shopping_cart</mat-icon><span>Carrito</span>
+      </a>
+    </mat-toolbar>
+
+    <!-- AQUÍ va el contenido de cada página -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

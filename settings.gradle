@@ -1,0 +1,2 @@
+rootProject.name = 'proyecto-clinica'
+include 'ClinicaProyect','clinicaproyect-spring'

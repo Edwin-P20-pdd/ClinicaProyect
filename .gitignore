@@ -1,0 +1,32 @@
+### Ignorar archivos comunes del sistema
+.DS_Store
+Thumbs.db
+
+### Ignorar configuracion de IntelliJ IDEA
+.idea/
+*.iml
+
+### Ignorar archivos generados por gradle
+.gradle/
+buid/
+!gradle/wrapper/gradle-wrapper.jar
+out/
+logs/
+*.log
+
+.vscode/
+
+clinica-app/node_modules/
+clinica-app/dist/
+clinica-app/ .angular/
+clinica-app/ .vscode/
+
+*.env
+*.local
+*.bak
+*.swp
+*.tmp
+
+*.classpath
+*.project
+*.settings/

@@ -1,0 +1,167 @@
+<!-- <mat-toolbar color="primary" class="topbar">
+    <a mat-button class="brand" routerLink="/medicamentos1">
+        <mat-icon class="brand-logo" fontSet="material-icons-outlined" fontIcon="local_hospital"></mat-icon>
+        <span class="brand-name">Clínica XYZ</span>
+    </a>
+
+    <a mat-button routerLink="/pacientes" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-outlined">people</mat-icon>
+        <span>Pacientes</span>
+    </a>
+    <a mat-button routerLink="/doctores" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-outlined">medical_services</mat-icon>
+        <span>Doctores</span>
+    </a>
+    <a mat-button routerLink="/recetas" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-outlined">receipt</mat-icon>
+        <span>Recetas</span>
+    </a>
+    <a mat-button routerLink="/citas" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-outlined">event</mat-icon>
+        <span>Citas</span>
+    </a>
+    <a mat-button routerLink="/medicamentos" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-outlined">local_pharmacy</mat-icon>
+        <span>Medicamentos</span>
+    </a>
+    <a mat-button routerLink="/recetasMedicamentos" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-outlined">medication</mat-icon>
+        <span>Recetas Medicamentos</span>
+    </a>
+
+    <a mat-stroked-button color="accent" routerLink="/carrito">
+        <mat-icon fontSet="material-icons-outlined">shopping_cart</mat-icon>
+        <span>Carrito</span>
+    </a>
+</mat-toolbar> -->
+
+
+<div class="container mt-4">
+  <h1>Receta</h1>
+  <div class="d-flex justify-content-center mb-3">
+    <button mat-raised-button color="primary" (click)="abrirModal()">
+      <mat-icon>add</mat-icon>Agregar Receta
+    </button>
+  </div>
+
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Buscar</mat-label>
+    <input matInput (keyup)="filtroReceta($event)" placeholder="Buscar receta...">
+  </mat-form-field>
+
+  <div class="table-responsive">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100">
+      <!-- Botón de detalles -->
+      <ng-container matColumnDef="detalles">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let r">
+          <button mat-icon-button color="primary" (click)="abrirModalDetalles(r)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- ID -->
+      <ng-container matColumnDef="idReceta">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let r">{{ r.idReceta }}</td>
+      </ng-container>
+
+      <!-- Fecha -->
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+        <td mat-cell *matCellDef="let r">{{ r.fecha | date: 'yyyy-MM-dd' }}</td>
+      </ng-container>
+
+      <!-- Descripción -->
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+        <td mat-cell *matCellDef="let r">{{ r.descripcion }}</td>
+      </ng-container>
+
+      <!-- Cita -->
+      <ng-container matColumnDef="cita">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cita</th>
+        <td mat-cell *matCellDef="let r">{{ r.cita?.idCita }} - {{ r.cita?.paciente?.nombre }} {{ r.cita?.paciente?.apellido }}</td>
+      </ng-container>
+
+      <!-- Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</th>
+        <td mat-cell *matCellDef="let r">
+          <div class="d-flex gap-1">
+            <button class="btn btn-warning btn-sm me-1" (click)="abrirModal(r)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="receta = r; delete()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="mostrarColumnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: mostrarColumnas"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButton></mat-paginator>
+  </div>
+
+  <!-- Modal para agregar/editar -->
+  <ng-template #modalReceta>
+    <mat-dialog-content>
+      <h2 mat-dialog-title>{{ editar ? 'Editar Receta' : 'Agregar Receta' }}</h2>
+      <form #formularioReceta="ngForm" novalidate>
+        <div class="row">
+          <!-- Fecha -->
+          <div class="col-md-6 mb-2">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Fecha</mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="receta.fecha" name="fecha" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <!-- Descripción -->
+          <div class="col-md-6 mb-2">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Descripción</mat-label>
+              <input matInput type="text" [(ngModel)]="receta.descripcion" name="descripcion" required>
+            </mat-form-field>
+          </div>
+
+          <!-- Cita -->
+          <div class="col-md-12 mb-2">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Cita</mat-label>
+              <mat-select [(ngModel)]="receta.cita" name="cita" required [compareWith]="compararCitas">
+                <mat-option *ngFor="let c of citas" [value]="c">{{ c.idCita }} - {{ c.paciente.nombre }} {{ c.paciente.apellido }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button mat-flat-button color="primary" (click)="guardarReceta()" [disabled]="formularioReceta.invalid">
+        {{ editar ? 'Actualizar' : 'Guardar' }}
+      </button>
+    </mat-dialog-actions>
+  </ng-template>
+
+  <!-- Modal para detalles -->
+  <ng-template #modalDetalles let-data>
+    <h2 mat-dialog-title>Detalles de la Receta</h2>
+    <mat-dialog-content>
+      <p><strong>ID:</strong> {{ recetaSeleccionada?.idReceta }}</p>
+      <p><strong>Fecha:</strong> {{ recetaSeleccionada?.fecha | date: 'yyyy-MM-dd' }}</p>
+      <p><strong>Descripción:</strong> {{ recetaSeleccionada?.descripcion }}</p>
+      <p><strong>Cita:</strong> {{ recetaSeleccionada?.cita?.idCita }} - {{ recetaSeleccionada?.cita?.paciente?.nombre }} {{ recetaSeleccionada?.cita?.paciente?.apellido }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="cerrarModal()">Cerrar</button>
+    </mat-dialog-actions>
+  </ng-template>
+</div>

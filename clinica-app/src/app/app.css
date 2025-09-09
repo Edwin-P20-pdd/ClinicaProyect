@@ -1,0 +1,65 @@
+.shell { min-height: 100vh; }
+.topbar { position: sticky; top: 0; z-index: 1000; display: flex; align-items: center; gap: .25rem; }
+.brand { padding-left: .25rem; }
+.brand-logo { margin-right: .35rem; }
+.spacer { flex: 1 1 auto; }
+.links { display: flex; gap: .25rem; }
+
+/* Compactar botones Material */
+a[mat-button], a[mat-stroked-button], button[mat-icon-button] { min-width: unset; }
+a[mat-button] { padding: 0 8px; }
+a[mat-stroked-button] { padding: 0 10px; }
+
+.menu-btn { display: none; }
+
+/* XS–SM (móvil) */
+@media (max-width: 768px) {
+  .menu-btn { display: inline-flex; }
+  .links { display: none; }
+  .brand-name { display: none; }      /* opcional: solo icono */
+  .cart-btn span { display: none; }   /* solo icono del carrito */
+}
+
+/* Tablet: solo iconos en los links */
+@media (max-width: 1024px) {
+  .links a span { display: none; }
+  .links a mat-icon { margin-right: 0; }
+}
+
+/* Drawer móvil */
+.mobile-drawer { width: 250px; }
+.mobile-nav { display: flex; gap: .5rem; align-items: center; flex-direction: column; padding: .75rem 0; }
+
+
+/* Texto e íconos blancos en la topbar */
+.topbar a,
+.topbar a mat-icon {
+  color: #fff !important;
+  text-decoration: none;
+}
+
+/* Mat List Item dentro de la toolbar (Angular Material MDC) */
+.topbar .mat-mdc-list-item .mdc-list-item__primary-text,
+.topbar .mat-mdc-list-item mat-icon {
+  color: #fff !important;
+}
+
+/* Botón "Carrito" tipo stroked: borde blanco */
+.topbar a[mat-stroked-button].mat-mdc-outlined-button {
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  color: #fff !important;
+}
+
+/* Hover/active sutiles */
+.topbar a:hover { opacity: .9; }
+.topbar a.active {
+  background: rgba(255, 255, 255, .14);
+  border-radius: 6px;
+}
+
+/* Opcional: forzar toolbar primaria a fondo azul y tipografía blanca */
+mat-toolbar.mat-primary {
+  background: #3f51b5;  /* o tu tono preferido */
+  color: #fff;
+}
+
