@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer{
         return new WebMvcConfigurer() {
             public void addCorsMappings(CorsRegistry corsRegistry){
                 corsRegistry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200")
+                        .allowedOrigins("http://192.168.4.140:4200")
                         .allowedMethods("GET","POST","PUT","DELETE","OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
@@ -24,8 +24,9 @@ public class WebConfig implements WebMvcConfigurer{
     }
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry){
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/portadas/**")
-                .addResourceLocations("file:uploads/portadas/*");
+                .addResourceLocations("file:uploads/portadas/");
     }
+
 }

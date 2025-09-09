@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class FacturaService {
 
-  private baseUrl = "http://192.168.4.164:8080/api/facturas";
+  private baseUrl = "http://192.168.4.140:8080/api/facturas";
 
   constructor(private http: HttpClient) { }
 

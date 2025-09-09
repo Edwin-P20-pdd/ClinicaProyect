@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class RecetaMedicamentoService {
 
-  private baseUrl = "http://192.168.4.164:8080/receta-medicamentos";
+  private baseUrl = "http://192.168.4.140:8080/receta-medicamentos";
 
   constructor(private http: HttpClient) {}
 

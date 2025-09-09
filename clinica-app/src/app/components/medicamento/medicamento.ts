@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MedicamentoService } from '../../services/medicamento';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-medicamento',
@@ -14,20 +15,36 @@ import { NgForm } from '@angular/forms';
   styleUrl: './medicamento.css'
 })
 export class MedicamentoComponent implements OnInit {
-  
+
   medicamentos: Medicamento[] = [];
   medicamento: Medicamento = {} as Medicamento;
   editar: boolean = false;
   idEditar: number | null = null;
 
+  // ✅ Para la imagen
+  selectedFile: File | null = null;
+  imagenPreview: string | null = null;
+
   dataSource!: MatTableDataSource<Medicamento>;
-  mostrarColumnas: String[] = ['idMedicamento', 'nombre', 'dosis', 'descripcion','precio','stock','portada','acciones'];
+  mostrarColumnas: String[] = [
+    'idMedicamento',
+    'nombre',
+    'dosis',
+    'descripcion',
+    'precio',
+    'stock',
+    'portada',
+    'acciones'
+  ];
 
   @ViewChild('formularioMedicamento') formularioMedicamento!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private medicamentoService: MedicamentoService) {}
+  constructor(
+    private medicamentoService: MedicamentoService,
+    private http: HttpClient // ✅ Ahora sí puedes usar this.http
+  ) {}
 
   ngOnInit(): void {
     this.findAll();
@@ -70,7 +87,7 @@ export class MedicamentoComponent implements OnInit {
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6'
     }).then((result) => {
-      if (result.isConfirmed) {
+      if (result.isConfirmed && this.medicamento.idMedicamento) {
         this.medicamentoService.delete(this.medicamento.idMedicamento).subscribe(() => {
           this.findAll();
           this.medicamento = {} as Medicamento;
@@ -112,5 +129,49 @@ export class MedicamentoComponent implements OnInit {
   filtroMedicamentos(event: Event): void {
     const filtro = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filtro.trim().toLowerCase();
+  }
+
+  // ✅ Métodos para la imagen
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+
+      // Mostrar preview local
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagenPreview = reader.result as string;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+
+  subirImagen(): void {
+    if (!this.selectedFile) {
+      Swal.fire('Error', 'Debe seleccionar un archivo antes de subirlo', 'error');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+
+    if (this.medicamento.portada) {
+      formData.append('oldImage', this.medicamento.portada);
+    }
+
+    this.http
+      .post<{ ruta: string }>('http://192.168.4.140:8080/api/upload-portada', formData)
+      .subscribe({
+        next: (res: { ruta: string }) => {
+          this.medicamento.portada = res.ruta;
+          this.imagenPreview = 'http://192.168.4.140:8080/' + res.ruta;
+          this.selectedFile = null;
+          Swal.fire('Éxito', 'La imagen se subió correctamente', 'success');
+        },
+        error: (err: unknown) => {
+          console.error(err);
+          Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+        }
+      });
   }
 }

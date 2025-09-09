@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class CitaService {
 
-  private baseUrl = "http://192.168.4.164:8080/citas";
+  private baseUrl = "http://192.168.4.140:8080/citas";
 
   constructor(private http: HttpClient) { }
 

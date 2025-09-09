@@ -21,7 +21,7 @@
             <th mat-header-cell *matHeaderCellDef> Medicamento</th>
             <td mat-cell *matCellDef="let it">
                  <div class="medicamento">
-                    <img [src]=" 'http://localhost:8080/'  + (it.medicamento.portada || 'portadas/noimage.png') " alt="" >
+                    <img [src]=" 'http://192.168.4.140:8080/'  + (it.medicamento.portada || 'portadas/noimage.png') " alt="" >
                  </div>                
                 <div>
                     <div class="t">{{ it.medicamento.nombre }}</div>

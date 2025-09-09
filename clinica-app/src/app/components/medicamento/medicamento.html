@@ -1,40 +1,3 @@
-<!-- <mat-toolbar color="primary" class="topbar">
-  <a mat-button class="brand" routerLink="/medicamentos1">
-    <mat-icon class="brand-logo" fontSet="material-icons-outlined" fontIcon="local_hospital"></mat-icon>
-    <span class="brand-name">Clínica XYZ</span>
-  </a>
-
-  <a mat-button routerLink="/pacientes" routerLinkActive="active">
-    <mat-icon fontSet="material-icons-outlined">people</mat-icon>
-    <span>Pacientes</span>
-  </a>
-  <a mat-button routerLink="/doctores" routerLinkActive="active">
-    <mat-icon fontSet="material-icons-outlined">medical_services</mat-icon>
-    <span>Doctores</span>
-  </a>
-  <a mat-button routerLink="/recetas" routerLinkActive="active">
-    <mat-icon fontSet="material-icons-outlined">receipt</mat-icon>
-    <span>Recetas</span>
-  </a>
-  <a mat-button routerLink="/citas" routerLinkActive="active">
-    <mat-icon fontSet="material-icons-outlined">event</mat-icon>
-    <span>Citas</span>
-  </a>
-  <a mat-button routerLink="/medicamentos" routerLinkActive="active">
-    <mat-icon fontSet="material-icons-outlined">local_pharmacy</mat-icon>
-    <span>Medicamentos</span>
-  </a>
-  <a mat-button routerLink="/recetasMedicamentos" routerLinkActive="active">
-    <mat-icon fontSet="material-icons-outlined">medication</mat-icon>
-    <span>Recetas Medicamentos</span>
-  </a>
-
-  <a mat-stroked-button color="accent" routerLink="/carrito">
-        <mat-icon fontSet="material-icons-outlined">shopping_cart</mat-icon>
-        <span>Carrito</span>
-    </a>
-</mat-toolbar> -->
-
 <div class="container mt-4" #formularioMedicamento>
   <h2>{{ editar ? 'Editar Medicamento' : 'Agregar Medicamento' }}</h2>
 
@@ -65,13 +28,39 @@
           [(ngModel)]="medicamento.stock" name="stock" required #stock="ngModel"
           [ngClass]="{'is-invalid': stock.invalid && stock.touched}">
       </div>
+
+      <!-- ✅ Sección de Imagen -->
       <div class="col-md-3 mb-2">
-        <input class="form-control" type="text" placeholder="Portada"
-          [(ngModel)]="medicamento.portada" name="portada" required #portada="ngModel"
-          [ngClass]="{'is-invalid': portada.invalid && portada.touched}">
+        <div class="custom-file-upload">
+          <!-- Input oculto para seleccionar archivo -->
+          <input #fileInput type="file" (change)="onFileSelected($event)" hidden>
+
+          <!-- Botón para abrir explorador (type="button" evita reset del form) -->
+          <button mat-raised-button color="primary" type="button" (click)="fileInput.click()" style="margin-bottom: 10px;">
+            Seleccionar Imagen
+          </button>
+
+          <!-- Nombre del archivo seleccionado -->
+          <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+
+          <!-- Botón para subir (type="button" evita reset del form) -->
+          <button mat-raised-button color="accent" type="button" (click)="subirImagen()" style="margin-left: 10px;">
+            Subir Imagen
+          </button>
+        </div>
+
+        <!-- Preview de imagen -->
+        <div class="imagen-container mt-2" *ngIf="medicamento.portada || imagenPreview">
+          <img 
+            [src]="imagenPreview || 'http://localhost:8080/' + medicamento.portada" 
+            alt="Portada del medicamento"
+            class="imagen-portada img-fluid rounded shadow-sm"
+          >
+        </div>
       </div>
     </div>
 
+    <!-- Botones Guardar/Cancelar -->
     <button type="submit" class="btn btn-primary me-2" [disabled]="formMedicamento.invalid">
       <mat-icon>{{ editar ? 'edit' : 'add' }}</mat-icon>
     </button>
@@ -82,6 +71,7 @@
 
   <hr class="my-4">
 
+  <!-- Lista -->
   <h3>Lista de Medicamentos</h3>
 
   <mat-form-field appearance="fill" class="w-100">
