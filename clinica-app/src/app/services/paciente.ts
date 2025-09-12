@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PacienteService {
 
-  private baseUrl = 'http://192.168.4.140:8080/pacientes';
+  private baseUrl = 'http://192.168.4.58:8080/pacientes';
 
   constructor(private http: HttpClient) {}
 

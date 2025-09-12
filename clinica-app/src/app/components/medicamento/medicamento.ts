@@ -160,11 +160,11 @@ export class MedicamentoComponent implements OnInit {
     }
 
     this.http
-      .post<{ ruta: string }>('http://192.168.4.140:8080/api/upload-portada', formData)
+      .post<{ ruta: string }>('http://192.168.4.79:8080/api/upload-portada', formData)
       .subscribe({
         next: (res: { ruta: string }) => {
           this.medicamento.portada = res.ruta;
-          this.imagenPreview = 'http://192.168.4.140:8080/' + res.ruta;
+          this.imagenPreview = 'http://192.168.4.79:8080/' + res.ruta;
           this.selectedFile = null;
           Swal.fire('Éxito', 'La imagen se subió correctamente', 'success');
         },
